@@ -234,50 +234,50 @@ class Home extends CI_Controller
         ));
     }
 
-//    function crawler()
-//    {
-//        $start = 0;
-//        while ($start <= 180) {
-//            $start += 10;
-//            $html = file_get_contents('http://ketoanbanthoigian.com/kinh-nghiem-ke-toan.html?start=' . $start);
-//            preg_match_all('/<h2 itemprop="name">\n<a href="(.*)" itemprop="url">/', $html, $matches);
-//            foreach ($matches[1] as $item) {
-//                $html = file_get_contents('http://ketoanbanthoigian.com' . $item);
-//                $html = preg_replace("/\n/", '', $html);
-//
-//                preg_match("/<h2 itemprop=\"name\">(.*)<\/h2><\/div><div itemprop=\"articleBody\">/", $html, $title);
-//                $title = trim($title[1]);
-//
-//                preg_match("/<div itemprop=\"articleBody\">(.*)<div class=\"extranews_separator\"><\/div>/", $html, $content);
-//                $content = trim($content[1]);
-//
-//                $data = array(
-//                    'name' => $title,
-//                    'content' => $content,
-//                    'seo_title' => $title,
-//                    'seo_description' => $title,
-//                    'image' => base_url('uploads/images/KeToanTaiNha.png')
-//                );
-//                $dataId = '';
-//                $this->blog_model->insert($data, $dataId);
-//
-//                //relationship
-//                $id = createId();
-//                $date = date("Y-m-d H:i:s");
-//                $sql = "INSERT INTO blog_category_blog(id,blog_category_id,blog_id,date_entered,date_modifiled) VALUES('{$id}','0fbfa626124db3cf3b3fb5750da0911cOxbU','{$dataId}','{$date}','{$date}')";
-//                $this->db->query($sql);
-//
-//                //rewrite url
-//                $routerName = rewrite($title);
-//                if (checkExistRouter($routerName)) {
-//                    $i = 0;
-//                    while (checkExistRouter($routerName . $i)) $i++;
-//                    $routerName .= $i;
-//                }
-//                $routerId = createId();
-//                $sql = "INSERT INTO router(id,name,target_id) VALUES('{$routerId}','{$routerName}','{$dataId}')";
-//                $this->db->query($sql);
-//            }
-//        }
-//    }
+   function crawler()
+   {
+       $start = 0;
+       while ($start <= 180) {
+           $start += 10;
+           $html = file_get_contents('http://ketoanbanthoigian.com/kinh-nghiem-ke-toan.html?start=' . $start);
+           preg_match_all('/<h2 itemprop="name">\n<a href="(.*)" itemprop="url">/', $html, $matches);
+           foreach ($matches[1] as $item) {
+               $html = file_get_contents('http://ketoanbanthoigian.com' . $item);
+               $html = preg_replace("/\n/", '', $html);
+
+               preg_match("/<h2 itemprop=\"name\">(.*)<\/h2><\/div><div itemprop=\"articleBody\">/", $html, $title);
+               $title = trim($title[1]);
+
+               preg_match("/<div itemprop=\"articleBody\">(.*)<div class=\"extranews_separator\"><\/div>/", $html, $content);
+               $content = trim($content[1]);
+
+               $data = array(
+                   'name' => $title,
+                   'content' => $content,
+                   'seo_title' => $title,
+                   'seo_description' => $title,
+                   'image' => base_url('uploads/images/KeToanTaiNha.png')
+               );
+               $dataId = '';
+               $this->blog_model->insert($data, $dataId);
+
+               //relationship
+               $id = createId();
+               $date = date("Y-m-d H:i:s");
+               $sql = "INSERT INTO blog_category_blog(id,blog_category_id,blog_id,date_entered,date_modifiled) VALUES('{$id}','0fbfa626124db3cf3b3fb5750da0911cOxbU','{$dataId}','{$date}','{$date}')";
+               $this->db->query($sql);
+
+               //rewrite url
+               $routerName = rewrite($title);
+               if (checkExistRouter($routerName)) {
+                   $i = 0;
+                   while (checkExistRouter($routerName . $i)) $i++;
+                   $routerName .= $i;
+               }
+               $routerId = createId();
+               $sql = "INSERT INTO router(id,name,target_id) VALUES('{$routerId}','{$routerName}','{$dataId}')";
+               $this->db->query($sql);
+           }
+       }
+   }
 }
